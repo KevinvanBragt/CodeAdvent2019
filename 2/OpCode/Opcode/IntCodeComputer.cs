@@ -7,32 +7,25 @@ namespace Opcode
 {
     public class IntCodeComputer
     {
-        int[] State;
-        int Position = 0;
+        private int[] State;
+        private int Position = 0;
 
         public int[] Compute(int[] state, int position = 0)
         {
             State = state;
             Position = position;
-            int[] result = null;
-            try
+            Boolean found;
+            do
             {
-                do
-                {
-                    result = Process();
-                    Position += 4;
-                } while (Position < State.Length-3);
-            }
-            catch (Exception e)
-            {
-                //
-            }
-
-            return result;
+                found = Process();
+                Position += 4;
+            } while (Position < State.Length-3 && !found);
+ 
+            return State;
 
         }
 
-        private int[] Process()
+        private Boolean Process()
         {
             if (State[Position] == 1)
             {
@@ -44,10 +37,11 @@ namespace Opcode
             }
             else if (State[Position] == 99)
             {
-                return State;
+                return true;
             }
 
-            return null;
+            return false;
+
 
         }
 

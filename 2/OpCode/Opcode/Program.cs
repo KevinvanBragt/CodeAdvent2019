@@ -11,7 +11,8 @@ namespace Opcode
 
             ParameterSearcher searcher = new ParameterSearcher(state);
             int[] output = searcher.Search(19690720);
-            Console.WriteLine(100 * output[1] + output[2]);
+
+            Console.WriteLine((output == null) ? "something went wrong" : (100 * output[1] + output[2]).ToString());
             System.Environment.Exit(1);
         }
     }

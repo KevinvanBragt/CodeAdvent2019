@@ -19,7 +19,7 @@ namespace Opcode
         {
             string[] input; 
 
-            using (StreamReader r = new StreamReader(@"D:\code advent\2\OpCode\1202 program alarm.txt"))
+            using (StreamReader r = new StreamReader(@"D:\CodeAdvent2019\CodeAdvent2019\2\OpCode\1202 program alarm.txt"))
             {
                 input = r.ReadToEnd().Split(",");
             }
