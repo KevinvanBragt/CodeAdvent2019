@@ -6,8 +6,9 @@ namespace ManhattanDistance
 {
     public class Wire
     {
-        public List<Point> Points { get; private set; } = new List<Point>();
+        public List<(int, int)> Points { get; private set; } = new List<(int, int)>();
         private (int x, int y) CurrentCoordinate = (0, 0);
+
         public Wire(String[] directions)
         {
             foreach (String direction in directions) 
@@ -21,7 +22,6 @@ namespace ManhattanDistance
         {
             do
             {
-                
                 switch (direction)
                 {
                     case "U" : CurrentCoordinate.y++; break;
@@ -31,7 +31,7 @@ namespace ManhattanDistance
                     default: break;
                 }
 
-                Points.Add(new Point(CurrentCoordinate.x, CurrentCoordinate.y));
+                Points.Add((CurrentCoordinate.x, CurrentCoordinate.y));
 
             } while (--recursion != 0);
         }

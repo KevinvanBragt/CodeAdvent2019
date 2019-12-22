@@ -7,8 +7,8 @@ namespace ManhattanDistance
 {
     public class DistanceCalculator
     {
-        private List<Point> Crosses = new List<Point>();
-        private Dictionary<Point, int> CrossDistances = new Dictionary<Point, int>();
+        private List<(int, int)> Crosses = new List<(int, int)>();
+        private Dictionary<(int, int), int> CrossDistances = new Dictionary<(int, int), int>();
 
         public DistanceCalculator(Wire wire1, Wire wire2)
         {
@@ -18,14 +18,17 @@ namespace ManhattanDistance
 
         private void FindCrosses(Wire wire1, Wire wire2)
         {
-            Crosses = wire1.Points.Where(p => wire2.Points.Any(p2 => p.X == p2.X && p.Y == p2.Y)).ToList();
+            foreach ((int, int) coordinate in wire1.Points)
+            {
+                if (wire2.Points.Contains(coordinate))
+                {
+                    Crosses.Add(coordinate);
+                }
+            }
         }
 
-        private int CalculateManhattanDistance(Point point)
+        private int CalculateManhattanDistance(int x, int y)
         {
-            int x = point.X;
-            int y = point.Y;
-
             if (x < 0)
             {
                 x *= -1;
@@ -39,11 +42,10 @@ namespace ManhattanDistance
 
         private void FindManhattanDistances()
         {
-            foreach (Point p in Crosses)
+            foreach ((int, int) coordinate in Crosses)
             {
-                CrossDistances.Add(p, CalculateManhattanDistance(p));
+                CrossDistances.Add((coordinate.Item1, coordinate.Item2), CalculateManhattanDistance(coordinate.Item1, coordinate.Item2));
             }
-
         }
 
         public int GetNearestDistance()
