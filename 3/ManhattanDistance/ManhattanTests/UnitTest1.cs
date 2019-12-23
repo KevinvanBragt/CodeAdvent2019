@@ -2,6 +2,7 @@ using ManhattanDistance;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using static ManhattanDistance.DistanceCalculator.DistanceTypes;
 
 namespace ManhattanTests
 {
@@ -34,8 +35,11 @@ namespace ManhattanTests
             Wire wire2 = new Wire(wireDirections2);
 
             DistanceCalculator calculator = new DistanceCalculator(wire1, wire2);
-            int output = calculator.GetNearestDistance();
+            long? output = calculator.GetNearestDistance(Manhattan);
             Assert.IsTrue(output == 6);
+
+            output = calculator.GetNearestDistance(Iteration);
+            Assert.IsTrue(output == 30);
         }
 
         [Test]
@@ -45,9 +49,11 @@ namespace ManhattanTests
             Wire wire4 = new Wire(wireDirections4);
 
             DistanceCalculator calculator = new DistanceCalculator(wire3, wire4);
-            int output = calculator.GetNearestDistance();
-
+            long? output = calculator.GetNearestDistance(Manhattan);
             Assert.IsTrue(output == 159);
+
+            output = calculator.GetNearestDistance(Iteration);
+            Assert.IsTrue(output == 610);
         }
         
         [Test]
@@ -57,8 +63,11 @@ namespace ManhattanTests
             Wire wire6 = new Wire(wireDirections6);
 
             DistanceCalculator calculator = new DistanceCalculator(wire5, wire6);
-            int output = calculator.GetNearestDistance();
+            long? output = calculator.GetNearestDistance(Manhattan);
             Assert.IsTrue(output == 135);
+
+            output = calculator.GetNearestDistance(Iteration);
+            Assert.IsTrue(output == 410);
         }
     }
 }

@@ -6,8 +6,9 @@ namespace ManhattanDistance
 {
     public class Wire
     {
-        public List<(int, int)> Points { get; private set; } = new List<(int, int)>();
+        public Dictionary<(int, int), long> Points { get; private set; } = new Dictionary<(int, int), long>();
         private (int x, int y) CurrentCoordinate = (0, 0);
+        private long CurrentIteration = 0;
 
         public Wire(String[] directions)
         {
@@ -30,11 +31,33 @@ namespace ManhattanDistance
                     case "R" : CurrentCoordinate.x++; break;
                     default: break;
                 }
+                CurrentIteration++;
 
-                Points.Add((CurrentCoordinate.x, CurrentCoordinate.y));
+                if (!Points.ContainsKey((CurrentCoordinate.x, CurrentCoordinate.y)))
+                {
+                    Points.Add((CurrentCoordinate.x, CurrentCoordinate.y), CurrentIteration);
+                }
 
             } while (--recursion != 0);
         }
 
+        public bool ContainsPoint((int x, int y) coordinate)
+        {
+            return Points.ContainsKey(coordinate);
+        }
+        public Dictionary<(int, int), long> FindCrosses(Wire wire)
+        {
+            Dictionary<(int, int), long> crosses = new Dictionary<(int, int), long>();
+
+            foreach (KeyValuePair<(int x, int y), long> p in Points)
+            {
+                if (wire.ContainsPoint((p.Key)))
+                {
+                    crosses.Add(p.Key, p.Value);
+                }
+            }
+            return crosses;
+        }
+       
     }
 }

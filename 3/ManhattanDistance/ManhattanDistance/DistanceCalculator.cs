@@ -7,28 +7,26 @@ namespace ManhattanDistance
 {
     public class DistanceCalculator
     {
-        private List<(int, int)> Crosses = new List<(int, int)>();
-        private Dictionary<(int, int), int> CrossDistances = new Dictionary<(int, int), int>();
+        private Wire Wire1;
+        private Wire Wire2;
+        private Dictionary<(int, int), long> Wire2Crosses = new Dictionary<(int, int), long>();
+        private Dictionary<(int, int), long> Wire1Crosses = new Dictionary<(int, int), long>();
+
+        public enum DistanceTypes { Manhattan, Iteration};
 
         public DistanceCalculator(Wire wire1, Wire wire2)
         {
-            FindCrosses(wire1, wire2);
-            FindManhattanDistances();
+            Wire1 = wire1;
+            Wire2 = wire2;
+            Wire2Crosses = Wire2.FindCrosses(Wire1);
+            Wire1Crosses = Wire1.FindCrosses(Wire2);
         }
-
-        private void FindCrosses(Wire wire1, Wire wire2)
+        
+        private long CalculateManhattanDistance((int, int) coordinates)
         {
-            foreach ((int, int) coordinate in wire1.Points)
-            {
-                if (wire2.Points.Contains(coordinate))
-                {
-                    Crosses.Add(coordinate);
-                }
-            }
-        }
+            int x = coordinates.Item1;
+            int y = coordinates.Item2;
 
-        private int CalculateManhattanDistance(int x, int y)
-        {
             if (x < 0)
             {
                 x *= -1;
@@ -40,18 +38,46 @@ namespace ManhattanDistance
             return x + y;
         }
 
-        private void FindManhattanDistances()
+        private long CalculateIterationDistance((int, int) coordinates)
         {
-            foreach ((int, int) coordinate in Crosses)
-            {
-                CrossDistances.Add((coordinate.Item1, coordinate.Item2), CalculateManhattanDistance(coordinate.Item1, coordinate.Item2));
-            }
+            return Wire1Crosses.First(p => p.Key == coordinates).Value + Wire2Crosses.First(p => p.Key == coordinates).Value;
         }
 
-        public int GetNearestDistance()
+        private long FindShortestManhattanDistance()
         {
-            return CrossDistances.OrderBy(pd => pd.Value).FirstOrDefault().Value;
+            List<long> manhattanDistances = new List<long>();
+
+            foreach (KeyValuePair<(int, int), long> point in Wire1Crosses)
+            {
+                manhattanDistances.Add(CalculateManhattanDistance(point.Key));
+            }
+
+            return manhattanDistances.Min();
         }
+        private long FindShortestIterationDistance()
+        {
+            List<long> iterationDistances = new List<long>();
+
+            foreach (KeyValuePair<(int, int), long> point in Wire1Crosses)
+            {
+                iterationDistances.Add(CalculateIterationDistance(point.Key));
+            }
+
+            return iterationDistances.Min();
+        } 
+        public long? GetNearestDistance(DistanceTypes type)
+        {
+            if (type == DistanceTypes.Manhattan)
+            {
+                return FindShortestManhattanDistance();
+            }
+            else if (type == DistanceTypes.Iteration)
+            {               
+                return FindShortestIterationDistance();
+            }
+
+            return null;
+        } 
 
     }
 }

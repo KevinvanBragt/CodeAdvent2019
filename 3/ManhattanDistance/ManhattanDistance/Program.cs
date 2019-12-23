@@ -1,4 +1,5 @@
 ﻿using System;
+using static ManhattanDistance.DistanceCalculator.DistanceTypes;
 
 namespace ManhattanDistance
 {
@@ -12,7 +13,7 @@ namespace ManhattanDistance
             Wire wire2 = new Wire(input.wireDirections2);
 
             DistanceCalculator calculator = new DistanceCalculator(wire1, wire2);
-            Console.WriteLine(calculator.GetNearestDistance());
+            Console.WriteLine(calculator.GetNearestDistance(Manhattan));
 
         }
     }
