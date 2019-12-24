@@ -10,10 +10,10 @@ namespace PassGuesser
         public bool IsValid(int guess)
         {
             byte[] guessArray = ParseGuess(guess);
-            return (SatisfiesDecreasingRule(guessArray) && SatisfiesDoubleRule(guessArray));
+            return (SatisfiesIncreasingRule(guessArray) && SatisfiesDoubleRule(guessArray));
         }
 
-        private bool SatisfiesDecreasingRule(byte[] guessArray)
+        private bool SatisfiesIncreasingRule(byte[] guessArray)
         {
             return guessArray[0] <= guessArray[1] &&
                    guessArray[1] <= guessArray[2] && 
