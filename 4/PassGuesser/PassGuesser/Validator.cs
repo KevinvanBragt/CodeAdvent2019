@@ -25,7 +25,7 @@ namespace PassGuesser
         private bool SatisfiesDoubleRule(byte[] guessArray)
         {
             List<byte> numbers = guessArray.ToList<byte>();
-            for (int y = 0; y < 10; y++)
+            foreach (byte y in numbers.ToList<byte>())
             {
                 if (numbers.FindAll(v => v == y).Count != 2)
                 {              
