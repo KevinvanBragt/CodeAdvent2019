@@ -7,20 +7,13 @@ namespace OrbitMap
     public class Planet
     {
         public string Name { get; private set; }
-
-        private List<Planet> OrbitingPlanets = new List<Planet>();
-        private Planet Orbits;
+        public Planet Orbits { get; private set; }
         public Planet(string name)
         {
             Name = name;
         }
 
-        public void AddOrbiter(Planet planet)
-        {
-            OrbitingPlanets.Add(planet);
-        }
-
-        public void setOrbits(Planet planet)
+        public void OrbitsPlanet(Planet planet)
         {
             Orbits = planet;
         }

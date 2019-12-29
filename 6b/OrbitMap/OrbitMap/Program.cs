@@ -8,6 +8,9 @@ namespace OrbitMap
         {
             OrbitMap orbitMap = new OrbitMap("TestOrbits");
             Console.WriteLine(orbitMap.CountTotalDistanceInMap());
+
+            Console.WriteLine(orbitMap.FindPathBetween("YOU", "SAN"));
+
         }
     }
 }
