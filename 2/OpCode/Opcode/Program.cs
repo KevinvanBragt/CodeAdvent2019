@@ -6,13 +6,15 @@ namespace Opcode
     {
         static void Main(string[] args)
         {
-            InputProcessor inputProcessor = new InputProcessor();
+            InputProcessor inputProcessor = new InputProcessor("1202 program alarm.txt");
             int[] state = inputProcessor.State;
 
-            ParameterSearcher searcher = new ParameterSearcher(state);
-            int[] output = searcher.Search(19690720);
+            //Diagnostic diagTest = new Diagnostic(1);
 
-            Console.WriteLine((output == null) ? "something went wrong" : (100 * output[1] + output[2]).ToString());
+            //ParameterSearcher searcher = new ParameterSearcher(state, computer);
+            //int? output = searcher.Search(19690720);
+            //Console.WriteLine((output == null) ? "something went wrong" : output.ToString());
+            
             System.Environment.Exit(1);
         }
     }

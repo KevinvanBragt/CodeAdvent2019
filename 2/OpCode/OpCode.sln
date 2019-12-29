@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		1202 program alarm.txt = 1202 program alarm.txt
 		output.txt = output.txt
+		TEST.txt = TEST.txt
 	EndProjectSection
 EndProject
 Global

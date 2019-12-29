@@ -9,17 +9,16 @@ namespace Opcode
 
         public int[] State { get; private set; }
 
-        public InputProcessor()
+        public InputProcessor(string filename)
         {
-            ParseFile();
+            ParseFile(filename);
             RecoverState();
         }
 
-        private void ParseFile()
+        private void ParseFile(string filename)
         {
             string[] input; 
-
-            using (StreamReader r = new StreamReader(@"D:\CodeAdvent2019\CodeAdvent2019\2\OpCode\1202 program alarm.txt"))
+            using (StreamReader r = new StreamReader(@"D:\CodeAdvent2019\CodeAdvent2019\2\OpCode\" + filename))
             {
                 input = r.ReadToEnd().Split(",");
             }

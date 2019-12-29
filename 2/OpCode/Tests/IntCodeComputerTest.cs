@@ -12,13 +12,13 @@ namespace Tests
         [Test]
         public void IntCodeComputerTestDay2()
         {
-            InputProcessor inputProcessor = new InputProcessor();
-            int[] state = inputProcessor.State;
+            InputProcessor inputProcessor = new InputProcessor("1202 program alarm.txt");
 
             IntCodeComputer computer = new IntCodeComputer();
-            int[] output = computer.Compute(state);
+            computer.State = inputProcessor.State;
+            int output = computer.Compute();
 
-            Assert.IsTrue(output[0] == 5534943);
+            Assert.IsTrue(output == 5534943);
         }
 
     }

@@ -10,29 +10,29 @@ namespace Opcode
 
         private readonly int[] OriginalState;
         private int[] SearchState;
-        private int Position;
         private int SearchConfiguration = -1;
         private int noun = 0;
         private int verb = 0;
 
-        public ParameterSearcher(int[] originalState)
+        public ParameterSearcher(int[] originalState, IntCodeComputer computer)
         {
             OriginalState = originalState;
-            Computer = new IntCodeComputer();
+            Computer = computer;
         }
         
-        public int[] Search(int output)
+        public int Search(int outputToSearchFor, int indexToSearchAt=0)
         {
-            
-            int[] result = null;
+            int position = 0;
+            int result;
             do
             {
                 SetSearchState();
                 SetSearchConfiguration();
-                result = Computer.Compute(SearchState, Position);
-            } while (result[0] != output && Position < OriginalState.Length-3);
+                Computer.State = SearchState;
+                result = Computer.Compute();
+            } while (Computer.State[indexToSearchAt] != outputToSearchFor && position < OriginalState.Length-3);
 
-            return result;
+            return Computer.State[1] * 100 + Computer.State[2];
 
         }
 
@@ -62,8 +62,6 @@ namespace Opcode
                 noun += SearchConfiguration;
             }
         }
-
-
 
     }
 }
